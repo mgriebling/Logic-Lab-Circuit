@@ -11,28 +11,26 @@ import ComposableArchitecture
 struct ANDGateLayout: View {
     let store: StoreOf<ANDFeature>
 
-    var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-            HStack(alignment: .top, spacing: 40) {
-                // Inputs
-                VStack(spacing: 20) {
-                    logicNode(imageName: viewStore.inputA ? "IN_On" : "IN_Off", label: "A")
-                    logicNode(imageName: viewStore.inputB ? "IN_On" : "IN_Off", label: "B")
-                }
-
-                // Gate
-                VStack {
-                    Image(viewStore.output ? "AND_On" : "AND").resizable().frame(width: 60, height: 60)
-                }
-
-                // Output
-                VStack {
-                    logicNode(imageName: viewStore.output ? "OUT_On" : "OUT_Off", label: "O")
-                }
-                .padding(.top, 20)
-            }
-        })
-    }
+	var body: some View {
+		HStack(alignment: .top, spacing: 40) {
+			// Inputs
+			VStack(spacing: 20) {
+				logicNode(imageName: store.inputA ? "IN_On" : "IN_Off", label: "A")
+				logicNode(imageName: store.inputB ? "IN_On" : "IN_Off", label: "B")
+			}
+			
+			// Gate
+			VStack {
+				Image(store.output ? "AND_On" : "AND").resizable().frame(width: 60, height: 60)
+			}
+			
+			// Output
+			VStack {
+				logicNode(imageName: store.output ? "OUT_On" : "OUT_Off", label: "O")
+			}
+			.padding(.top, 20)
+		}
+	}
 
     private func logicNode(imageName: String, label: String, font: Font = .footnote) -> some View {
         ZStack {

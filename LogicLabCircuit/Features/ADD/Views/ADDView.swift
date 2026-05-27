@@ -10,36 +10,34 @@ import ComposableArchitecture
 
 struct ADDView: View {
     let store: StoreOf<ADDFeature>
-    
-    var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-            VStack(spacing: 0) {
-                Text("Full Adder Circuit")
-                    .font(.title3)
-                    .bold()
-                
-                ZStack {
-                    ADDWirePath(store: store)
-                    ADDGateLayout(store: store)
-                }
-                .frame(width: 300, height: 300)
-                .onAppear {
-                    viewStore.send(.computeOutput)
-                }
-                .onChange(of: viewStore.inputA) {
-                    viewStore.send(.computeOutput)
-                }
-                .onChange(of: viewStore.inputB) {
-                    viewStore.send(.computeOutput)
-                }
-                .onChange(of: viewStore.inputCi) {
-                    viewStore.send(.computeOutput)
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding()
-        })
-    }
+	
+	var body: some View {
+		VStack(spacing: 0) {
+			Text("Full Adder Circuit")
+				.font(.title3)
+				.bold()
+			
+			ZStack {
+				ADDWirePath(store: store)
+				ADDGateLayout(store: store)
+			}
+			.frame(width: 300, height: 300)
+			.onAppear {
+				store.send(.computeOutput)
+			}
+			.onChange(of: store.inputA) {
+				store.send(.computeOutput)
+			}
+			.onChange(of: store.inputB) {
+				store.send(.computeOutput)
+			}
+			.onChange(of: store.inputCi) {
+				store.send(.computeOutput)
+			}
+		}
+		.frame(maxWidth: .infinity, maxHeight: .infinity)
+		.padding()
+	}
 }
 
 #Preview {

@@ -14,7 +14,7 @@ struct FullAdderFormula {
 
 struct FullSubtractorFormula {
     static let difference = "(A ⊕ B) ⊕ Bin"
-    static let borrow = "¬A ⋅ B + ¬A ⋅ Bin + B ⋅ Bin"
+    static let borrow = "A︦ ⋅ B + A︦ ⋅ Bin + B ⋅ Bin"
 }
 
 struct HalfAdderFormula {
@@ -24,7 +24,7 @@ struct HalfAdderFormula {
 
 struct HalfSubtractorFormula {
     static let difference = "A ⊕ B"
-    static let borrow = "¬A ⋅ B"
+    static let borrow = "A︦ ⋅ B"
 }
 
 struct ANDFormula {
