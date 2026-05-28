@@ -21,7 +21,7 @@ struct MainView: View {
 			// Picker for selecting operation
 			Picker("Operation", selection: $store.selectedOperation.sending(\.operationChanged).animation(.default)) {
 				ForEach(ALUOperation.allCases, id: \.self) { operation in
-					Text(operation.rawValue).tag(operation)
+					Text(operation.rawValue.capitalized).tag(operation)
 				}
 			}
 			.pickerStyle(.segmented)
@@ -42,6 +42,8 @@ struct MainView: View {
 							ANDView(store: store.scope(state: \.andFeature, action: \.andFeature))
 						case .nandGate:
 							NANDView(store: store.scope(state: \.nandFeature, action: \.nandFeature))
+						case .notGate:
+							NOTView(store: store.scope(state: \.notFeature, action: \.notFeature))
 						case .orGate:
 							ORView(store: store.scope(state: \.orFeature, action: \.orFeature))
 						case .norGate:
@@ -63,11 +65,13 @@ struct MainView: View {
 							.padding(.horizontal)
 						}
 						
-						VStack {
-							Text("Input B")
-							Toggle("", isOn: $store.inputB.sending(\.inputBChanged))
-							.labelsHidden()
-							.padding(.horizontal)
+						if store.selectedOperation != .notGate {
+							VStack {
+								Text("Input B")
+								Toggle("", isOn: $store.inputB.sending(\.inputBChanged))
+									.labelsHidden()
+									.padding(.horizontal)
+							}
 						}
 						
 						if store.selectedOperation == .add || store.selectedOperation == .sub {
@@ -122,6 +126,8 @@ struct MainView: View {
 		case .sub:
 			["Difference (D): \(FullSubtractorFormula.difference)",
 			 "Borrow (Bo): \(FullSubtractorFormula.borrow)"]
+		case .notGate:
+			["NOT Gate: \(NOTFormula.negation)"]
 		case .andGate:
             ["AND Gate: \(ANDFormula.conjunction)"]
 		case .nandGate:
@@ -139,9 +145,10 @@ struct MainView: View {
     
     private func getTruthTable(for operation: ALUOperation) -> TruthTable {
         switch operation {
-        case .add: TruthTables.fullAdder
-        case .sub: TruthTables.fullSubtractor
-        default:   TruthTables.generateTable(for: operation)
+        case .add: 	   TruthTables.fullAdder
+        case .sub: 	   TruthTables.fullSubtractor
+        case .notGate: TruthTables.generateTable(for: operation, inputs: 1)
+        default:   	   TruthTables.generateTable(for: operation)
         }
     }
 }

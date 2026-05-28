@@ -8,12 +8,14 @@
 import Foundation
 
 struct ALUModel {
-    static func compute(intA: Int, intB: Int, operation: ALUOperation) -> Int {
+    static func compute(intA: Int, intB: Int = 0, operation: ALUOperation) -> Int {
         switch operation {
         case .add:
             intA &+ intB
         case .sub:
             intA &- intB
+        case .notGate:
+			not(intA)
         case .andGate:
             intA & intB
         case .nandGate:

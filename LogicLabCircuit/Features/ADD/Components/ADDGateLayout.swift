@@ -28,8 +28,8 @@ struct ADDGateLayout: View {
 				HStack(alignment: .top, spacing: 50) {
 					Image(orAB && xorAB ? "XOR_On" : "XOR")
 						.resizable()
-						.frame(width: 60, height: 60)
-					Image(store.outputS ? "XOR_On" : "XOR").resizable().frame(width: 60, height: 60).padding(.top, 35)
+						.frame(width: 75, height: 60)
+					Image(store.outputS ? "XOR_On" : "XOR").resizable().frame(width: 75, height: 60).padding(.top, 35)
 				}
 				
 				HStack(alignment: .top, spacing: 50) {
@@ -38,14 +38,14 @@ struct ADDGateLayout: View {
 						let and1PartialInputsOn = orAB && store.inputCi
 						Image(and1AllInputsOn ? "AND" : and1PartialInputsOn ? "AND_On" : "AND")
 							.resizable()
-							.frame(width: 60, height: 60)
+							.frame(width: 70, height: 60)
 						Image(store.outputCo || andAB ? "AND_On" : "AND")
 							.resizable()
-							.frame(width: 60, height: 60)
+							.frame(width: 70, height: 60)
 					}
 					.padding(.leading, 50)
 					
-					Image(store.outputCo ? "OR_On" : "OR").resizable().frame(width: 60, height: 60).padding(.top, 30)
+					Image(store.outputCo ? "OR_On" : "OR").resizable().frame(width: 70, height: 60).padding(.top, 30)
 				}
 			}
 			

@@ -54,18 +54,36 @@ struct TruthTables {
         ]
     )
 	
+	// Inverter Truth Table
+	static let inverter = TruthTable(
+		inputHeaders: ["A"],
+		outputHeaders: ["Output"],
+		rows: [
+			TruthTableRow(inputs: [0], outputs: [1]),
+			TruthTableRow(inputs: [1], outputs: [0])
+		]
+	)
+	
 	// Generate a truth table based on the ALU definition
 	static func generateTable(for gate: ALUOperation, inputs: Int = 2) -> TruthTable {
-		assert(inputs == 2, "Only 2-bit inputs supported for now")
+		assert(inputs > 0 && inputs <= 2, "Only 2-bit inputs supported for now")
 		var rows: [TruthTableRow] = []
+		let headers = inputs == 1 ? ["A"] : ["A", "B"]
 		let rowCount = Int(pow(2.0, Double(inputs)))
 		for row in 0..<rowCount {
-			let binRow = String(row+rowCount, radix: 2).map { $0 == "1" ? 1 : 0 }
-			let ain = binRow[1], bin = binRow[2]
-			let output = ALUModel.compute(intA: ain, intB: bin, operation: gate)
-			rows.append(TruthTableRow(inputs: [ain, bin], outputs: [output]))
+			let binRow = String(row, radix: 2).padLeft(toSize: 2)
+				.map { $0 == "1" ? 1 : 0 }
+			if inputs == 1 {
+				let ain = binRow[1]
+				let output = ALUModel.compute(intA: ain, operation: gate)
+				rows.append(TruthTableRow(inputs: [ain], outputs: [output]))
+			} else {
+				let ain = binRow[0], bin = binRow[1]
+				let output = ALUModel.compute(intA: ain, intB: bin, operation: gate)
+				rows.append(TruthTableRow(inputs: [ain, bin], outputs: [output]))
+			}
 		}
-		return TruthTable(inputHeaders: ["A", "B"], outputHeaders: ["Output"], rows: rows)
+		return TruthTable(inputHeaders: headers, outputHeaders: ["Output"], rows: rows)
 	}
 }
 

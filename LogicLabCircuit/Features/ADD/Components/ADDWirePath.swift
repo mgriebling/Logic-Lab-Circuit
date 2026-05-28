@@ -41,7 +41,7 @@ struct ADDWirePath: View {
 				// Dot
 				path.addEllipse(in: CGRect(x: 150 - radius, y: 65 - radius, width: radius * 2, height: radius * 2))
 				path.addLine(to: CGPoint(x: 150, y: 65))
-				path.addLine(to: CGPoint(x: 175, y: 65))
+				path.addLine(to: CGPoint(x: 190, y: 65))
 			}
 			.stroke(xorAB ? activeColor : inactiveColor, lineWidth: 3)
 			
@@ -54,7 +54,7 @@ struct ADDWirePath: View {
 				path.addLine(to: CGPoint(x: 80, y: 95))
 				path.addLine(to: CGPoint(x: 80, y: 105))
 				path.addLine(to: CGPoint(x: 80, y: 95))
-				path.addLine(to: CGPoint(x: 175, y: 95))
+				path.addLine(to: CGPoint(x: 193, y: 95))
 			}
 			.stroke(store.inputCi ? activeColor : inactiveColor, lineWidth: 3)
 			
@@ -68,7 +68,7 @@ struct ADDWirePath: View {
 			// XOR2 output to SUM
 			Path { path in
 				path.move(to: CGPoint(x: 228, y: 80))
-				path.addLine(to: CGPoint(x: 325, y: 80))
+				path.addLine(to: CGPoint(x: 340, y: 80))
 			}
 			.stroke(store.outputS ? activeColor : inactiveColor, lineWidth: 3)
 			
@@ -137,7 +137,7 @@ struct ADDWirePath: View {
 				path.addLine(to: CGPoint(x: 190, y: 165))
 				path.addLine(to: CGPoint(x: 190, y: 180))
 				path.addLine(to: CGPoint(x: 190, y: 180))
-				path.addLine(to: CGPoint(x: 230, y: 180))
+				path.addLine(to: CGPoint(x: 240, y: 180))
 			}
 			.stroke(andAB ? inactiveColor : store.outputCo ? activeColor : inactiveColor, lineWidth: 3)
 			
@@ -148,14 +148,14 @@ struct ADDWirePath: View {
 				path.addLine(to: CGPoint(x: 190, y: 255))
 				path.addLine(to: CGPoint(x: 190, y: 210))
 				path.addLine(to: CGPoint(x: 190, y: 210))
-				path.addLine(to: CGPoint(x: 230, y: 210))
+				path.addLine(to: CGPoint(x: 240, y: 210))
 			}
 			.stroke(store.outputCo ? activeColor : inactiveColor, lineWidth: 3)
 			
 			// OR output to COUT
 			Path { path in
 				path.move(to: CGPoint(x: 278, y: 195))
-				path.addLine(to: CGPoint(x: 325, y: 195))
+				path.addLine(to: CGPoint(x: 340, y: 195))
 			}
 			.stroke(store.outputCo ? activeColor : inactiveColor, lineWidth: 3)
 		}

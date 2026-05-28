@@ -22,6 +22,7 @@ struct MainFeature {
         // Child feature states
         var addFeature = ADDFeature.State()
         var subFeature = SUBFeature.State()
+		var notFeature = NOTFeature.State()
         var andFeature = ANDFeature.State()
 		var nandFeature = NANDFeature.State()
         var orFeature = ORFeature.State()
@@ -41,6 +42,7 @@ struct MainFeature {
         // Child feature actions
         case addFeature(ADDFeature.Action)
         case subFeature(SUBFeature.Action)
+		case notFeature(NOTFeature.Action)
         case andFeature(ANDFeature.Action)
 		case nandFeature(NANDFeature.Action)
         case orFeature(ORFeature.Action)
@@ -57,6 +59,10 @@ struct MainFeature {
         Scope(state: \.subFeature, action: \.subFeature) {
             SUBFeature()
         }
+		
+		Scope(state: \.notFeature, action: \.notFeature) {
+			NOTFeature()
+		}
         
         Scope(state: \.andFeature, action: \.andFeature) {
             ANDFeature()
@@ -89,6 +95,7 @@ struct MainFeature {
                 // Update all child features
                 state.addFeature.inputA = value
                 state.subFeature.inputA = value
+				state.notFeature.inputA = value
                 state.andFeature.inputA = value
 				state.nandFeature.inputA = value
                 state.orFeature.inputA = value
@@ -139,7 +146,7 @@ struct MainFeature {
                 state.result = ALUModel.compute(intA: intA, intB: intB, operation: state.selectedOperation)
                 return .none
                 
-            case .addFeature, .subFeature, .andFeature, .nandFeature, .orFeature, .norFeature, .xorFeature, .xnorFeature:
+            case .addFeature, .subFeature, .notFeature, .andFeature, .nandFeature, .orFeature, .norFeature, .xorFeature, .xnorFeature:
                 return .none
             }
         }

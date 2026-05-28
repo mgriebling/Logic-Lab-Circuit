@@ -24,11 +24,15 @@ struct HalfAdderFormula {
 
 struct HalfSubtractorFormula {
     static let difference = "A ⊕ B"
-    static let borrow = "A︦ ⋅ B"
+    static let borrow = "¬A ⋅ B"
 }
 
 struct ANDFormula {
     static let conjunction = "A ⋅ B"
+}
+
+struct NOTFormula {
+	static let negation = "¬A"
 }
 
 struct NANDFormula {
