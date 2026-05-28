@@ -28,23 +28,23 @@ struct SUBGateLayout: View {
 			// Gates
 			VStack(alignment: .leading) {
 				HStack(alignment: .top, spacing: 150) {
-					Image(xorAB ? "XOR_On" : "XOR").resizable().frame(width: 45, height: 45)
+					Image(xorAB ? "XOR_On" : "XOR").resizable().frame(width: 60, height: 45)
 						.padding(.leading, 20)
 						.padding(.top, 45)
-					Image(store.outputD ? "XOR_On" : "XOR").resizable().frame(width: 45, height: 45)
+					Image(store.outputD ? "XOR_On" : "XOR").resizable().frame(width: 60, height: 45)
 				}
 				
 				HStack(alignment: .top, spacing: 20) {
 					Spacer()
 					Image(orAB ? "NOT_On" : "NOT").resizable().frame(width: 30, height: 30)
-					Image(xnorAB && store.inputBi ? "AND_On" : "AND").resizable().frame(width: 45, height: 45)
-					Image(store.outputBo ? "OR_On" : "OR").resizable().frame(width: 45, height: 45)
+					Image(xnorAB && store.inputBi ? "AND_On" : "AND").resizable().frame(width: 55, height: 45)
+					Image(store.outputBo ? "OR_On" : "OR").resizable().frame(width: 60, height: 45)
 						.padding(.top, 10)
 				}
 				
 				HStack(alignment: .top, spacing: 15) {
 					Image(store.inputA ? "NOT_On" : "NOT").resizable().frame(width: 30, height: 30)
-					Image(store.inputB && notA ? "AND_On" : "AND").resizable().frame(width: 45, height: 45)
+					Image(store.inputB && notA ? "AND_On" : "AND").resizable().frame(width: 55, height: 45)
 				}
 				.padding(.leading, 25)
 			}

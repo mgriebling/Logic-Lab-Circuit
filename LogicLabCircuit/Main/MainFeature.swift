@@ -16,15 +16,18 @@ struct MainFeature {
         var inputB: Bool = false
         var inputCi: Bool = false
         var selectedOperation: ALUOperation = .add
-        var result: UInt8 = 0
+        var result: Int = 0
         var isTapped: Bool = false
         
         // Child feature states
         var addFeature = ADDFeature.State()
         var subFeature = SUBFeature.State()
         var andFeature = ANDFeature.State()
+		var nandFeature = NANDFeature.State()
         var orFeature = ORFeature.State()
+		var norFeature = NORFeature.State()
         var xorFeature = XORFeature.State()
+		var xnorFeature = XNORFeature.State()
     }
     
     enum Action {
@@ -39,8 +42,11 @@ struct MainFeature {
         case addFeature(ADDFeature.Action)
         case subFeature(SUBFeature.Action)
         case andFeature(ANDFeature.Action)
+		case nandFeature(NANDFeature.Action)
         case orFeature(ORFeature.Action)
+		case norFeature(NORFeature.Action)
         case xorFeature(XORFeature.Action)
+		case xnorFeature(XNORFeature.Action)
     }
     
     var body: some ReducerOf<Self> {
@@ -55,14 +61,26 @@ struct MainFeature {
         Scope(state: \.andFeature, action: \.andFeature) {
             ANDFeature()
         }
+		
+		Scope(state: \.nandFeature, action: \.nandFeature) {
+			NANDFeature()
+		}
         
         Scope(state: \.orFeature, action: \.orFeature) {
             ORFeature()
         }
+		
+		Scope(state: \.norFeature, action: \.norFeature) {
+			NORFeature()
+		}
         
         Scope(state: \.xorFeature, action: \.xorFeature) {
             XORFeature()
         }
+		
+		Scope(state: \.xnorFeature, action: \.xnorFeature) {
+			XNORFeature()
+		}
         
         Reduce { state, action in
             switch action {
@@ -72,8 +90,11 @@ struct MainFeature {
                 state.addFeature.inputA = value
                 state.subFeature.inputA = value
                 state.andFeature.inputA = value
+				state.nandFeature.inputA = value
                 state.orFeature.inputA = value
+				state.norFeature.inputA = value
                 state.xorFeature.inputA = value
+				state.xnorFeature.inputA = value
                 return .run { send in
                     await send(.computeResult)
                 }
@@ -84,8 +105,11 @@ struct MainFeature {
                 state.addFeature.inputB = value
                 state.subFeature.inputB = value
                 state.andFeature.inputB = value
+				state.nandFeature.inputB = value
                 state.orFeature.inputB = value
+				state.norFeature.inputB = value
                 state.xorFeature.inputB = value
+				state.xnorFeature.inputB = value
                 return .run { send in
                     await send(.computeResult)
                 }
@@ -110,12 +134,12 @@ struct MainFeature {
                 return .none
                 
             case .computeResult:
-                let intA: UInt8 = state.inputA ? 1 : 0
-                let intB: UInt8 = state.inputB ? 1 : 0
+                let intA = state.inputA ? 1 : 0
+                let intB = state.inputB ? 1 : 0
                 state.result = ALUModel.compute(intA: intA, intB: intB, operation: state.selectedOperation)
                 return .none
                 
-            case .addFeature, .subFeature, .andFeature, .orFeature, .xorFeature:
+            case .addFeature, .subFeature, .andFeature, .nandFeature, .orFeature, .norFeature, .xorFeature, .xnorFeature:
                 return .none
             }
         }

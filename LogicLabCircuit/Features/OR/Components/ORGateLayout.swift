@@ -21,7 +21,7 @@ struct ORGateLayout: View {
 			
 			// Gate
 			VStack {
-				Image(store.output ? "OR_On" : "OR").resizable().frame(width: 60, height: 60)
+				Image(store.output ? "OR_On" : "OR").resizable().frame(width: 80, height: 60)
 			}
 			
 			// Output

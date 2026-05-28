@@ -8,18 +8,28 @@
 import Foundation
 
 struct ALUModel {
-    static func compute(intA: UInt8, intB: UInt8, operation: ALUOperation) -> UInt8 {
+    static func compute(intA: Int, intB: Int, operation: ALUOperation) -> Int {
         switch operation {
         case .add:
-            return intA &+ intB
+            intA &+ intB
         case .sub:
-            return intA &- intB
+            intA &- intB
         case .andGate:
-            return intA & intB
+            intA & intB
+        case .nandGate:
+			not(intA & intB)
         case .orGate:
-            return intA | intB
+            intA | intB
+        case .norGate:
+			not(intA | intB)
         case .xorGate:
-            return intA ^ intB
+            intA ^ intB
+        case .xnorGate:
+			not(intA ^ intB)
         }
     }
+	
+	static func not(_ input: Int) -> Int {
+		(input != 0) ? 0 : 1
+	}
 }

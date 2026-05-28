@@ -19,13 +19,13 @@ struct MainView: View {
 				.font(.title3)
 			
 			// Picker for selecting operation
-			Picker("Operation", selection: $store.selectedOperation.sending(\.operationChanged)) {
+			Picker("Operation", selection: $store.selectedOperation.sending(\.operationChanged).animation(.default)) {
 				ForEach(ALUOperation.allCases, id: \.self) { operation in
 					Text(operation.rawValue).tag(operation)
 				}
 			}
 			.pickerStyle(.segmented)
-			.padding()
+			.padding(.horizontal)
 			
 			Divider()
 			
@@ -40,13 +40,19 @@ struct MainView: View {
 							SUBView(store: store.scope(state: \.subFeature, action: \.subFeature))
 						case .andGate:
 							ANDView(store: store.scope(state: \.andFeature, action: \.andFeature))
+						case .nandGate:
+							NANDView(store: store.scope(state: \.nandFeature, action: \.nandFeature))
 						case .orGate:
 							ORView(store: store.scope(state: \.orFeature, action: \.orFeature))
+						case .norGate:
+							NORView(store: store.scope(state: \.norFeature, action: \.norFeature))
 						case .xorGate:
 							XORView(store: store.scope(state: \.xorFeature, action: \.xorFeature))
+						case .xnorGate:
+							XNORView(store: store.scope(state: \.xnorFeature, action: \.xnorFeature))
 						}
 					}
-					// .frame(maxHeight: 300)
+					.frame(maxHeight: 300)
 					
 					// Inputs below the picker
 					HStack {
@@ -54,14 +60,14 @@ struct MainView: View {
 							Text("Input A")
 							Toggle("", isOn: $store.inputA.sending(\.inputAChanged))
 							.labelsHidden()
-							.padding()
+							.padding(.horizontal)
 						}
 						
 						VStack {
 							Text("Input B")
 							Toggle("", isOn: $store.inputB.sending(\.inputBChanged))
 							.labelsHidden()
-							.padding()
+							.padding(.horizontal)
 						}
 						
 						if store.selectedOperation == .add || store.selectedOperation == .sub {
@@ -69,7 +75,7 @@ struct MainView: View {
 								Text(store.selectedOperation == .sub ? "Input Bi" : "Input Ci")
 								Toggle("", isOn: $store.inputCi.sending(\.inputCiChanged))
 								.labelsHidden()
-								.padding()
+								.padding(.horizontal)
 							}
 						}
 					}
@@ -111,30 +117,31 @@ struct MainView: View {
 	private func getFormula(for operation: ALUOperation) -> [String] {
 		switch operation {
 		case .add:
-			return ["Sum (S): \(FullAdderFormula.sum)", "Carry Out (Co): \(FullAdderFormula.carryOut)"]
+			["Sum (S): \(FullAdderFormula.sum)",
+			 "Carry Out (Co): \(FullAdderFormula.carryOut)"]
 		case .sub:
-			return ["Difference (D): \(FullSubtractorFormula.difference)", "Borrow (Bo): \(FullSubtractorFormula.borrow)"]
+			["Difference (D): \(FullSubtractorFormula.difference)",
+			 "Borrow (Bo): \(FullSubtractorFormula.borrow)"]
 		case .andGate:
-            return ["AND Gate: \(ANDFormula.conjunction)"]
+            ["AND Gate: \(ANDFormula.conjunction)"]
+		case .nandGate:
+			["NAND Gate: \(NANDFormula.nand)"]
 		case .orGate:
-            return ["OR Gate: \(ORFormula.disjunction)"]
+            ["OR Gate: \(ORFormula.disjunction)"]
+		case .norGate:
+			["NOR Gate: \(NORFormula.nor)"]
 		case .xorGate:
-            return ["XOR Gate: \(XORFormula.exclusiveOr)"]
+            ["XOR Gate: \(XORFormula.exclusiveOr)"]
+		case .xnorGate:
+			["XOR Gate: \(XNORFormula.exclusiveNor)"]
         }
     }
     
     private func getTruthTable(for operation: ALUOperation) -> TruthTable {
         switch operation {
-        case .add:
-            return TruthTables.fullAdder
-        case .sub:
-            return TruthTables.fullSubtractor
-        case .andGate:
-            return TruthTables.andGate
-        case .orGate:
-            return TruthTables.orGate
-        case .xorGate:
-            return TruthTables.xorGate
+        case .add: TruthTables.fullAdder
+        case .sub: TruthTables.fullSubtractor
+        default:   TruthTables.generateTable(for: operation)
         }
     }
 }

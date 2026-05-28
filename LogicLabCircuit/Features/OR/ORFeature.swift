@@ -39,8 +39,8 @@ struct ORFeature {
                 }
                 
             case .computeOutput:
-                let intA: UInt8 = state.inputA ? 1 : 0
-                let intB: UInt8 = state.inputB ? 1 : 0
+                let intA = state.inputA ? 1 : 0
+                let intB = state.inputB ? 1 : 0
                 let result = ALUModel.compute(intA: intA, intB: intB, operation: .orGate)
                 state.output = result == 1
                 return .none

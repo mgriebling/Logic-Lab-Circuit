@@ -53,54 +53,31 @@ struct TruthTables {
             TruthTableRow(inputs: [1, 1, 1], outputs: [1, 1])
         ]
     )
-    
-    // AND Gate Truth Table
-    static let andGate = TruthTable(
-        inputHeaders: ["A", "B"],
-        outputHeaders: ["Output"],
-        rows: [
-            TruthTableRow(inputs: [0, 0], outputs: [0]),
-            TruthTableRow(inputs: [0, 1], outputs: [0]),
-            TruthTableRow(inputs: [1, 0], outputs: [0]),
-            TruthTableRow(inputs: [1, 1], outputs: [1])
-        ]
-    )
-    
-    // OR Gate Truth Table
-    static let orGate = TruthTable(
-        inputHeaders: ["A", "B"],
-        outputHeaders: ["Output"],
-        rows: [
-            TruthTableRow(inputs: [0, 0], outputs: [0]),
-            TruthTableRow(inputs: [0, 1], outputs: [1]),
-            TruthTableRow(inputs: [1, 0], outputs: [1]),
-            TruthTableRow(inputs: [1, 1], outputs: [1])
-        ]
-    )
-    
-    // XOR Gate Truth Table
-    static let xorGate = TruthTable(
-        inputHeaders: ["A", "B"],
-        outputHeaders: ["Output"],
-        rows: [
-            TruthTableRow(inputs: [0, 0], outputs: [0]),
-            TruthTableRow(inputs: [0, 1], outputs: [1]),
-            TruthTableRow(inputs: [1, 0], outputs: [1]),
-            TruthTableRow(inputs: [1, 1], outputs: [0])
-        ]
-    )
+	
+	// Generate a truth table based on the ALU definition
+	static func generateTable(for gate: ALUOperation, inputs: Int = 2) -> TruthTable {
+		assert(inputs == 2, "Only 2-bit inputs supported for now")
+		var rows: [TruthTableRow] = []
+		let rowCount = Int(pow(2.0, Double(inputs)))
+		for row in 0..<rowCount {
+			let binRow = String(row+rowCount, radix: 2).map { $0 == "1" ? 1 : 0 }
+			let ain = binRow[1], bin = binRow[2]
+			let output = ALUModel.compute(intA: ain, intB: bin, operation: gate)
+			rows.append(TruthTableRow(inputs: [ain, bin], outputs: [output]))
+		}
+		return TruthTable(inputHeaders: ["A", "B"], outputHeaders: ["Output"], rows: rows)
+	}
 }
 
 // MARK: - Truth Table View Component
 struct TruthTableView: View {
     let truthTable: TruthTable
     let title: String
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+	
+	var body: some View {
+        VStack(alignment: .leading) {
             Text(title)
                 .font(.headline)
-                .padding(.bottom, 4)
             
             VStack(spacing: 0) {
                 // Header row
@@ -108,24 +85,14 @@ struct TruthTableView: View {
                     // Input headers
                     HStack(spacing: 1) {
                         ForEach(truthTable.inputHeaders, id: \.self) { header in
-                            Text(header)
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .frame(width: 40, height: 30)
-                                .background(Color.gray.opacity(0.3))
-                                .border(Color.gray, width: 0.5)
+							tableCell(header)
                         }
                     }
                     
                     // Output headers
                     HStack(spacing: 1) {
                         ForEach(truthTable.outputHeaders, id: \.self) { header in
-                            Text(header)
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .frame(width: 50, height: 30)
-                                .background(Color.blue.opacity(0.3))
-                                .border(Color.gray, width: 0.5)
+							tableCell(header, isInput: false)
                         }
                     }
                 }
@@ -136,22 +103,14 @@ struct TruthTableView: View {
                         // Input values
                         HStack(spacing: 1) {
                             ForEach(Array(row.inputs.enumerated()), id: \.offset) { _, input in
-                                Text("\(input)")
-                                    .font(.caption)
-                                    .frame(width: 40, height: 25)
-                                    .background(Color.gray.opacity(0.1))
-                                    .border(Color.gray, width: 0.5)
+								tableCell("\(input)", isHeader: false)
                             }
                         }
                         
                         // Output values
                         HStack(spacing: 1) {
                             ForEach(Array(row.outputs.enumerated()), id: \.offset) { _, output in
-                                Text("\(output)")
-                                    .font(.caption)
-                                    .frame(width: 50, height: 25)
-                                    .background(Color.blue.opacity(0.1))
-                                    .border(Color.gray, width: 0.5)
+								tableCell("\(output)", isInput: false, isHeader: false)
                             }
                         }
                     }
@@ -159,4 +118,14 @@ struct TruthTableView: View {
             }
         }
     }
+	
+	func tableCell(_ header: String, isInput: Bool = true, isHeader: Bool = true) -> some View {
+		let opacity = isHeader ? 0.3 : 0.1
+		return Text(header)
+			.frame(width: (isInput ? 40 : 50), height: isHeader ? 30 : 25)
+			.background(isInput ? Color.blue.opacity(opacity) : .gray.opacity(opacity))
+			.border(Color.gray, width: 0.5)
+			.font(.caption)
+			.fontWeight(isHeader ? .bold : .regular)
+	}
 }

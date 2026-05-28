@@ -1,5 +1,5 @@
 //
-//  XORView.swift
+//  ANDView.swift
 //  LogicLabCircuit
 //
 //  Created by Ferdinand Lunardy on 26/07/25.
@@ -8,20 +8,20 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct XORView: View {
-    let store: StoreOf<XORFeature>
-	
+struct NANDView: View {
+    let store: StoreOf<NANDFeature>
+
 	var body: some View {
 		VStack(spacing: 0) {
-			Text("XOR Logic Gate")
+			Text("NAND Logic Gate")
 				.font(.title3)
 				.bold()
 			
 			ZStack {
-				XORWirePath(store: store)
-				XORGateLayout(store: store)
+				NANDWirePath(store: store)
+				NANDGateLayout(store: store)
 			}
-			.frame(width: 360, height: 150)
+			.frame(width: 380, height: 150)
 			.onAppear {
 				store.send(.computeOutput)
 			}
@@ -36,9 +36,9 @@ struct XORView: View {
 }
 
 #Preview {
-    XORView(
-        store: Store(initialState: XORFeature.State(inputA: false, inputB: true)) {
-            XORFeature()
+    NANDView(
+        store: Store(initialState: NANDFeature.State(inputA: true, inputB: false)) {
+            NANDFeature()
         }
     )
 }

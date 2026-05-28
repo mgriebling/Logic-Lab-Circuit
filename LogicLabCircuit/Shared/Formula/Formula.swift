@@ -14,7 +14,7 @@ struct FullAdderFormula {
 
 struct FullSubtractorFormula {
     static let difference = "(A ⊕ B) ⊕ Bin"
-    static let borrow = "A︦ ⋅ B + A︦ ⋅ Bin + B ⋅ Bin"
+    static let borrow = "¬A ⋅ B + ¬A ⋅ Bin + B ⋅ Bin"
 }
 
 struct HalfAdderFormula {
@@ -31,10 +31,22 @@ struct ANDFormula {
     static let conjunction = "A ⋅ B"
 }
 
+struct NANDFormula {
+	static let nand = "¬(A ⋅ B)"
+}
+
 struct ORFormula {
     static let disjunction = "A + B"
 }
 
+struct NORFormula {
+	static let nor = "¬(A + B)"
+}
+
 struct XORFormula {
     static let exclusiveOr = "A ⊕ B"
+}
+
+struct XNORFormula {
+	static let exclusiveNor = "¬(A ⊕ B)"
 }

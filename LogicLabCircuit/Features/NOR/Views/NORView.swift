@@ -1,5 +1,5 @@
 //
-//  XORView.swift
+//  ORView.swift
 //  LogicLabCircuit
 //
 //  Created by Ferdinand Lunardy on 26/07/25.
@@ -8,18 +8,18 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct XORView: View {
-    let store: StoreOf<XORFeature>
+struct NORView: View {
+	let store: StoreOf<NORFeature>
 	
 	var body: some View {
 		VStack(spacing: 0) {
-			Text("XOR Logic Gate")
+			Text("NOR Logic Gate")
 				.font(.title3)
 				.bold()
 			
 			ZStack {
-				XORWirePath(store: store)
-				XORGateLayout(store: store)
+				NORWirePath(store: store)
+				NORGateLayout(store: store)
 			}
 			.frame(width: 360, height: 150)
 			.onAppear {
@@ -36,9 +36,9 @@ struct XORView: View {
 }
 
 #Preview {
-    XORView(
-        store: Store(initialState: XORFeature.State(inputA: false, inputB: true)) {
-            XORFeature()
+    NORView(
+		store: Store(initialState: NORFeature.State(inputA: true, inputB: false)) {
+            NORFeature()
         }
     )
 }

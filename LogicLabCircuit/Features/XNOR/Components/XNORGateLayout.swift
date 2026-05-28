@@ -8,8 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct XORGateLayout: View {
-    let store: StoreOf<XORFeature>
+struct XNORGateLayout: View {
+    let store: StoreOf<XNORFeature>
 
 	var body: some View {
 		HStack(alignment: .top, spacing: 40) {
@@ -21,7 +21,7 @@ struct XORGateLayout: View {
 			
 			// Gate
 			VStack {
-				Image(store.output ? "XOR_On" : "XOR").resizable().frame(width: 80, height: 60)
+				Image(store.output ? "XNOR_On" : "XNOR").resizable().frame(width: 90, height: 60)
 			}
 			
 			// Output

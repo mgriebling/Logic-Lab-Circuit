@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct ANDFeature {
+struct NANDFeature {
     @ObservableState
     struct State: Equatable {
         var inputA: Bool = false
@@ -41,7 +41,7 @@ struct ANDFeature {
             case .computeOutput:
                 let intA = state.inputA ? 1 : 0
                 let intB = state.inputB ? 1 : 0
-                let result = ALUModel.compute(intA: intA, intB: intB, operation: .andGate)
+                let result = ALUModel.compute(intA: intA, intB: intB, operation: .nandGate)
                 state.output = result == 1
                 return .none
             }

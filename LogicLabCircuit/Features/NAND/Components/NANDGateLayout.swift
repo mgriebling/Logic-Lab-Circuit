@@ -1,5 +1,5 @@
 //
-//  XORGateLayout.swift
+//  ANDGateLayout.swift
 //  LogicLabCircuit
 //
 //  Created by Ferdinand Lunardy on 26/07/25.
@@ -8,8 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct XORGateLayout: View {
-    let store: StoreOf<XORFeature>
+struct NANDGateLayout: View {
+    let store: StoreOf<NANDFeature>
 
 	var body: some View {
 		HStack(alignment: .top, spacing: 40) {
@@ -21,7 +21,8 @@ struct XORGateLayout: View {
 			
 			// Gate
 			VStack {
-				Image(store.output ? "XOR_On" : "XOR").resizable().frame(width: 80, height: 60)
+				Image(store.output ? "NAND_On" : "NAND").resizable()
+					.frame(width: 80, height: 60)
 			}
 			
 			// Output

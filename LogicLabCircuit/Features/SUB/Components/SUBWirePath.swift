@@ -22,7 +22,7 @@ struct SUBWirePath: View {
 			// Bin to XOR2
 			Path { path in
 				path.move(to: CGPoint(x: 18, y: 57.5))
-				path.addLine(to: CGPoint(x: 260, y: 57.5))
+				path.addLine(to: CGPoint(x: 275, y: 57.5))
 			}
 			.stroke(store.inputBi ? activeColor : inactiveColor, lineWidth: 3)
 			
@@ -44,7 +44,7 @@ struct SUBWirePath: View {
 			// XOR2 to D
 			Path { path in
 				path.move(to: CGPoint(x: 295, y: 70))
-				path.addLine(to: CGPoint(x: 350, y: 70))
+				path.addLine(to: CGPoint(x: 355, y: 70))
 			}
 			.stroke(store.outputD ? activeColor : inactiveColor, lineWidth: 3)
 			
@@ -117,13 +117,13 @@ struct SUBWirePath: View {
 				path.move(to: CGPoint(x: 140, y: 115))
 				path.addLine(to: CGPoint(x: 245, y: 115))
 				path.addLine(to: CGPoint(x: 245, y: 85))
-				path.addLine(to: CGPoint(x: 257.5, y: 85))
+				path.addLine(to: CGPoint(x: 275, y: 85))
 			}
 			.stroke(xorAB ? activeColor : inactiveColor, lineWidth: 3)
 			
 			// NOT2 to AND2
 			Path { path in
-				path.move(to: CGPoint(x: 187.5, y: 160))
+				path.move(to: CGPoint(x: 175, y: 160))
 				path.addLine(to: CGPoint(x: 215, y: 160))
 			}
 			.stroke(xnorAB ? activeColor : inactiveColor, lineWidth: 3)
@@ -147,7 +147,7 @@ struct SUBWirePath: View {
 			// OR to Bo
 			Path { path in
 				path.move(to: CGPoint(x: 317.5, y: 177.5))
-				path.addLine(to: CGPoint(x: 345, y: 177.5))
+				path.addLine(to: CGPoint(x: 355, y: 177.5))
 			}
 			.stroke(store.outputBo ? activeColor : inactiveColor, lineWidth: 3)
 		}

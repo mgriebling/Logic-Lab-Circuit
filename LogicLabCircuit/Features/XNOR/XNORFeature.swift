@@ -1,5 +1,5 @@
 //
-//  ANDFeature.swift
+//  XORFeature.swift
 //  LogicLabCircuit
 //
 //  Created by Ferdinand Lunardy on 06/09/25.
@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct ANDFeature {
+struct XNORFeature {
     @ObservableState
     struct State: Equatable {
         var inputA: Bool = false
@@ -41,7 +41,7 @@ struct ANDFeature {
             case .computeOutput:
                 let intA = state.inputA ? 1 : 0
                 let intB = state.inputB ? 1 : 0
-                let result = ALUModel.compute(intA: intA, intB: intB, operation: .andGate)
+                let result = ALUModel.compute(intA: intA, intB: intB, operation: .xnorGate)
                 state.output = result == 1
                 return .none
             }

@@ -21,7 +21,7 @@ struct ANDGateLayout: View {
 			
 			// Gate
 			VStack {
-				Image(store.output ? "AND_On" : "AND").resizable().frame(width: 60, height: 60)
+				Image(store.output ? "AND_On" : "AND").resizable().frame(width: 70, height: 60)
 			}
 			
 			// Output

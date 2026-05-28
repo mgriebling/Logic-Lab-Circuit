@@ -8,18 +8,18 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct XORView: View {
-    let store: StoreOf<XORFeature>
+struct XNORView: View {
+    let store: StoreOf<XNORFeature>
 	
 	var body: some View {
 		VStack(spacing: 0) {
-			Text("XOR Logic Gate")
+			Text("XNOR Logic Gate")
 				.font(.title3)
 				.bold()
 			
 			ZStack {
-				XORWirePath(store: store)
-				XORGateLayout(store: store)
+				XNORWirePath(store: store)
+				XNORGateLayout(store: store)
 			}
 			.frame(width: 360, height: 150)
 			.onAppear {
@@ -36,9 +36,9 @@ struct XORView: View {
 }
 
 #Preview {
-    XORView(
-        store: Store(initialState: XORFeature.State(inputA: false, inputB: true)) {
-            XORFeature()
+    XNORView(
+        store: Store(initialState: XNORFeature.State(inputA: false, inputB: true)) {
+            XNORFeature()
         }
     )
 }

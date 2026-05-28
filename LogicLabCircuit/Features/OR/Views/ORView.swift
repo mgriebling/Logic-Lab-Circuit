@@ -21,7 +21,7 @@ struct ORView: View {
 				ORWirePath(store: store)
 				ORGateLayout(store: store)
 			}
-			.frame(width: 360, height: 300)
+			.frame(width: 360, height: 150)
 			.onAppear {
 				store.send(.computeOutput)
 			}

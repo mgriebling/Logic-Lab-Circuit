@@ -10,6 +10,9 @@ enum ALUOperation: String, CaseIterable {
     case add = "ADD"
     case sub = "SUB"
     case andGate = "AND"
+	case nandGate = "NAND"
     case orGate = "OR"
+	case norGate = "NOR"
     case xorGate = "XOR"
+	case xnorGate = "XNOR"
 }
