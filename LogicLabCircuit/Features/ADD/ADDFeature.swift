@@ -48,9 +48,11 @@ struct ADDFeature {
                 }
                 
             case .computeOutput:
-                let xorAB = state.inputA != state.inputB
-                state.outputS = xorAB != state.inputCi
-                state.outputCo = (state.inputA && state.inputB) || (state.inputCi && xorAB)
+				(state.outputS, state.outputCo) =
+					ALUModel.compute(a: state.inputA,
+									 b: state.inputB,
+									 c: state.inputCi,
+									 operation: .add)
                 return .none
             }
         }

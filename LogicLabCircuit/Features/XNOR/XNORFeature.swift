@@ -1,8 +1,8 @@
 //
-//  XORFeature.swift
+//  XNORFeature.swift
 //  LogicLabCircuit
 //
-//  Created by Ferdinand Lunardy on 06/09/25.
+//  Created by Michael Griebling on 05/25/26.
 //
 
 import ComposableArchitecture
@@ -39,10 +39,9 @@ struct XNORFeature {
                 }
                 
             case .computeOutput:
-                let intA = state.inputA ? 1 : 0
-                let intB = state.inputB ? 1 : 0
-                let result = ALUModel.compute(intA: intA, intB: intB, operation: .xnorGate)
-                state.output = result == 1
+				state.output = ALUModel.compute(
+					aIn: state.inputA, bIn: state.inputB,
+					operation: .xnorGate)
                 return .none
             }
         }

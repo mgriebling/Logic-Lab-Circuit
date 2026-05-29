@@ -21,10 +21,10 @@ struct MainView: View {
 			// Picker for selecting operation
 			Picker("Operation", selection: $store.selectedOperation.sending(\.operationChanged).animation(.default)) {
 				ForEach(ALUOperation.allCases, id: \.self) { operation in
-					Text(operation.rawValue.capitalized).tag(operation)
+					Text(operation.rawValue + " Logic Circuit").tag(operation)
 				}
 			}
-			.pickerStyle(.segmented)
+			// .pickerStyle(.wheel)
 			.padding(.horizontal)
 			
 			Divider()

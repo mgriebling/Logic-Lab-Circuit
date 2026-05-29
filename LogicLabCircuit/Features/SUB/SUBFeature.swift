@@ -48,13 +48,12 @@ struct SUBFeature {
                 }
                 
             case .computeOutput:
-                let notA = !state.inputA
-                let notAANDB = notA && state.inputB
-                let notAANDBi = notA && state.inputBi
-                let bANDBi = state.inputB && state.inputBi
-                let xorAB = state.inputA != state.inputB
-                state.outputD = xorAB != state.inputBi
-                state.outputBo = notAANDB || notAANDBi || bANDBi
+                (state.outputD, state.outputBo) =
+					ALUModel.compute(
+						a: state.inputA,
+						b: state.inputB,
+						c: state.inputBi,
+						operation: .sub)
                 return .none
             }
         }

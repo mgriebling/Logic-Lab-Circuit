@@ -55,18 +55,18 @@ struct TruthTables {
     )
 	
 	// Inverter Truth Table
-	static let inverter = TruthTable(
-		inputHeaders: ["A"],
-		outputHeaders: ["Output"],
-		rows: [
-			TruthTableRow(inputs: [0], outputs: [1]),
-			TruthTableRow(inputs: [1], outputs: [0])
-		]
-	)
+//	static let inverter = TruthTable(
+//		inputHeaders: ["A"],
+//		outputHeaders: ["Output"],
+//		rows: [
+//			TruthTableRow(inputs: [0], outputs: [1]),
+//			TruthTableRow(inputs: [1], outputs: [0])
+//		]
+//	)
 	
 	// Generate a truth table based on the ALU definition
 	static func generateTable(for gate: ALUOperation, inputs: Int = 2) -> TruthTable {
-		assert(inputs > 0 && inputs <= 2, "Only 2-bit inputs supported for now")
+		assert(inputs > 0 && inputs <= 2, "Only 1- and 2-bit inputs supported for now")
 		var rows: [TruthTableRow] = []
 		let headers = inputs == 1 ? ["A"] : ["A", "B"]
 		let rowCount = Int(pow(2.0, Double(inputs)))

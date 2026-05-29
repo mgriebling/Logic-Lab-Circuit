@@ -39,10 +39,9 @@ struct XORFeature {
                 }
                 
             case .computeOutput:
-                let intA = state.inputA ? 1 : 0
-                let intB = state.inputB ? 1 : 0
-                let result = ALUModel.compute(intA: intA, intB: intB, operation: .xorGate)
-                state.output = result == 1
+				state.output = ALUModel.compute(
+					aIn: state.inputA, bIn: state.inputB,
+					operation: .xorGate)
                 return .none
             }
         }

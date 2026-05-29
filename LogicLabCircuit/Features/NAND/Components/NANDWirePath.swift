@@ -1,8 +1,8 @@
 //
-//  ANDWirePath.swift
+//  NANDWirePath.swift
 //  LogicLabCircuit
 //
-//  Created by Ferdinand Lunardy on 26/07/25.
+//  Created by Michael Griebling on 05/25/26.
 //
 
 import SwiftUI

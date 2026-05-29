@@ -1,8 +1,8 @@
 //
-//  ORFeature.swift
+//  NOTFeature.swift
 //  LogicLabCircuit
 //
-//  Created by Ferdinand Lunardy on 06/09/25.
+//  Created by Michael Griebling on 05/25/26.
 //
 
 import ComposableArchitecture
@@ -31,9 +31,8 @@ struct NOTFeature {
                 }
                 
             case .computeOutput:
-                let intA = state.inputA ? 1 : 0
-                let result = ALUModel.compute(intA: intA, operation: .notGate)
-                state.output = result == 1
+				state.output = ALUModel.compute(
+					aIn: state.inputA, operation: .notGate)
                 return .none
             }
         }
