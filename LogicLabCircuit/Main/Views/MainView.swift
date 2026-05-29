@@ -145,10 +145,20 @@ struct MainView: View {
     
     private func getTruthTable(for operation: ALUOperation) -> TruthTable {
         switch operation {
-        case .add: 	   TruthTables.fullAdder
-        case .sub: 	   TruthTables.fullSubtractor
-        case .notGate: TruthTables.generateTable(for: operation, inputs: 1)
-        default:   	   TruthTables.generateTable(for: operation)
+        case .add:
+			TruthTables.generateTable(for: .add,
+									  inputs: ["A", "B", "C-IN"],
+									  outputs: ["Sum", "C-OUT"])
+        case .sub:
+			TruthTables.generateTable(for: .sub,
+									  inputs: ["A", "B", "B-IN"],
+									  outputs: ["D", "B-OUT"])
+        case .notGate:
+			// all the 1-input operations
+			TruthTables.generateTable(for: operation, inputs: ["A"])
+        default:
+			// all the 2-input operations
+			TruthTables.generateTable(for: operation)
         }
     }
 }

@@ -49,9 +49,9 @@ struct ADDFeature {
                 
             case .computeOutput:
 				(state.outputS, state.outputCo) =
-					ALUModel.compute(a: state.inputA,
-									 b: state.inputB,
-									 c: state.inputCi,
+					ALUModel.compute(aIn: state.inputA,
+									 bIn: state.inputB,
+									 cIn: state.inputCi,
 									 operation: .add)
                 return .none
             }

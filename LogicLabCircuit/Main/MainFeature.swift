@@ -16,7 +16,7 @@ struct MainFeature {
         var inputB: Bool = false
         var inputCi: Bool = false
         var selectedOperation: ALUOperation = .add
-        var result: Int = 0
+        var result: Bool = false
         var isTapped: Bool = false
         
         // Child feature states
@@ -141,9 +141,9 @@ struct MainFeature {
                 return .none
                 
             case .computeResult:
-                let intA = state.inputA ? 1 : 0
-                let intB = state.inputB ? 1 : 0
-                state.result = ALUModel.compute(intA: intA, intB: intB, operation: state.selectedOperation)
+				state.result = ALUModel.compute(aIn: state.inputA,
+												bIn: state.inputB,
+												operation: state.selectedOperation)
                 return .none
                 
             case .addFeature, .subFeature, .notFeature, .andFeature, .nandFeature, .orFeature, .norFeature, .xorFeature, .xnorFeature:

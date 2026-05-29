@@ -39,7 +39,7 @@ struct ANDFeature {
                 }
                 
             case .computeOutput:
-					state.output = ALUModel.compute(
+				state.output = ALUModel.compute(
 						aIn: state.inputA, bIn: state.inputB,
 						operation: .andGate)
                 return .none

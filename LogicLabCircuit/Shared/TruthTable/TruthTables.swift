@@ -9,8 +9,12 @@ import SwiftUI
 
 // MARK: - Truth Table Models
 struct TruthTableRow {
-    let inputs: [Int]
-    let outputs: [Int]
+    let inputs: [Bool]
+    let outputs: [Bool]
+	
+	// derived for truth table convenience
+	var inInt: [Int] { inputs.map { $0 ? 1 : 0 } }
+	var outInt: [Int] { outputs.map { $0 ? 1 : 0 } }
 }
 
 struct TruthTable {
@@ -21,69 +25,34 @@ struct TruthTable {
 
 // MARK: - Truth Table Data
 struct TruthTables {
-    
-    // Full Adder Truth Table
-    static let fullAdder = TruthTable(
-        inputHeaders: ["A", "B", "C-IN"],
-        outputHeaders: ["Sum", "C-OUT"],
-        rows: [
-            TruthTableRow(inputs: [0, 0, 0], outputs: [0, 0]),
-            TruthTableRow(inputs: [0, 0, 1], outputs: [1, 0]),
-            TruthTableRow(inputs: [0, 1, 0], outputs: [1, 0]),
-            TruthTableRow(inputs: [0, 1, 1], outputs: [0, 1]),
-            TruthTableRow(inputs: [1, 0, 0], outputs: [1, 0]),
-            TruthTableRow(inputs: [1, 0, 1], outputs: [0, 1]),
-            TruthTableRow(inputs: [1, 1, 0], outputs: [0, 1]),
-            TruthTableRow(inputs: [1, 1, 1], outputs: [1, 1])
-        ]
-    )
-    
-    // Full Subtractor Truth Table
-    static let fullSubtractor = TruthTable(
-        inputHeaders: ["A", "B", "B-IN"],
-        outputHeaders: ["D", "B-OUT"],
-        rows: [
-            TruthTableRow(inputs: [0, 0, 0], outputs: [0, 0]),
-            TruthTableRow(inputs: [0, 0, 1], outputs: [1, 1]),
-            TruthTableRow(inputs: [0, 1, 0], outputs: [1, 1]),
-            TruthTableRow(inputs: [0, 1, 1], outputs: [0, 1]),
-            TruthTableRow(inputs: [1, 0, 0], outputs: [1, 0]),
-            TruthTableRow(inputs: [1, 0, 1], outputs: [0, 0]),
-            TruthTableRow(inputs: [1, 1, 0], outputs: [0, 0]),
-            TruthTableRow(inputs: [1, 1, 1], outputs: [1, 1])
-        ]
-    )
-	
-	// Inverter Truth Table
-//	static let inverter = TruthTable(
-//		inputHeaders: ["A"],
-//		outputHeaders: ["Output"],
-//		rows: [
-//			TruthTableRow(inputs: [0], outputs: [1]),
-//			TruthTableRow(inputs: [1], outputs: [0])
-//		]
-//	)
-	
-	// Generate a truth table based on the ALU definition
-	static func generateTable(for gate: ALUOperation, inputs: Int = 2) -> TruthTable {
-		assert(inputs > 0 && inputs <= 2, "Only 1- and 2-bit inputs supported for now")
+	// Generate a truth table based on the ALUModel definition of the
+	// associated ALUOperation.
+	static func generateTable (for gate: ALUOperation,
+							   inputs: [String] = ["A", "B"],
+							   outputs: [String] = ["Output"]) -> TruthTable {
 		var rows: [TruthTableRow] = []
-		let headers = inputs == 1 ? ["A"] : ["A", "B"]
-		let rowCount = Int(pow(2.0, Double(inputs)))
+		let numInputs = inputs.count
+		let rowCount = Int(pow(2.0, Double(numInputs)))
+		
+		// Generate the truth table rows based on the ALUModel
 		for row in 0..<rowCount {
-			let binRow = String(row, radix: 2).padLeft(toSize: 2)
-				.map { $0 == "1" ? 1 : 0 }
-			if inputs == 1 {
-				let ain = binRow[1]
-				let output = ALUModel.compute(intA: ain, operation: gate)
-				rows.append(TruthTableRow(inputs: [ain], outputs: [output]))
-			} else {
-				let ain = binRow[0], bin = binRow[1]
-				let output = ALUModel.compute(intA: ain, intB: bin, operation: gate)
-				rows.append(TruthTableRow(inputs: [ain, bin], outputs: [output]))
+			let binIn = String(row, radix: 2).padLeft(toSize: numInputs).map { $0 == "1" }
+			let output: [Bool]
+			switch inputs.count {
+			case 1: output = ALUModel.compute(aIn: binIn[0], operation: gate)
+			case 2: output = ALUModel.compute(aIn: binIn[0],
+											  bIn: binIn[1],
+											  operation: gate)
+			case 3: output = ALUModel.compute(aIn: binIn[0],
+											  bIn: binIn[1],
+											  cIn: binIn[2],
+											  operation: gate)
+			default:
+				fatalError("Only 1 to 3 inputs supported for now")
 			}
+			rows.append(TruthTableRow(inputs: binIn, outputs: output))
 		}
-		return TruthTable(inputHeaders: headers, outputHeaders: ["Output"], rows: rows)
+		return TruthTable(inputHeaders: inputs, outputHeaders: outputs, rows: rows)
 	}
 }
 
@@ -91,7 +60,7 @@ struct TruthTables {
 struct TruthTableView: View {
     let truthTable: TruthTable
     let title: String
-	
+		
 	var body: some View {
         VStack(alignment: .leading) {
             Text(title)
@@ -100,42 +69,44 @@ struct TruthTableView: View {
             VStack(spacing: 0) {
                 // Header row
                 HStack(spacing: 1) {
-                    // Input headers
-                    HStack(spacing: 1) {
-                        ForEach(truthTable.inputHeaders, id: \.self) { header in
-							tableCell(header)
-                        }
-                    }
+					// Input headers
+					cells(for: truthTable.inputHeaders)
                     
                     // Output headers
-                    HStack(spacing: 1) {
-                        ForEach(truthTable.outputHeaders, id: \.self) { header in
-							tableCell(header, isInput: false)
-                        }
-                    }
+					cells(for: truthTable.outputHeaders, isInput: false)
                 }
                 
                 // Data rows
                 ForEach(Array(truthTable.rows.enumerated()), id: \.offset) { _, row in
                     HStack(spacing: 1) {
                         // Input values
-                        HStack(spacing: 1) {
-                            ForEach(Array(row.inputs.enumerated()), id: \.offset) { _, input in
-								tableCell("\(input)", isHeader: false)
-                            }
-                        }
+						cells(for: row.inInt)
                         
                         // Output values
-                        HStack(spacing: 1) {
-                            ForEach(Array(row.outputs.enumerated()), id: \.offset) { _, output in
-								tableCell("\(output)", isInput: false, isHeader: false)
-                            }
-                        }
+						cells(for: row.outInt, isInput: false)
                     }
                 }
             }
         }
     }
+	
+	@ViewBuilder
+	private func cells(for content: [String], isInput: Bool = true) -> some View {
+		HStack(spacing: 1) {
+			ForEach(content, id: \.self) { header in
+				tableCell(header, isInput: isInput)
+			}
+		}
+	}
+	
+	@ViewBuilder
+	private func cells(for content: [Int], isInput: Bool = true) -> some View {
+		HStack(spacing: 1) {
+			ForEach(Array(content.enumerated()), id: \.offset) { _, output in
+				tableCell("\(output)", isInput: isInput, isHeader: false)
+			}
+		}
+	}
 	
 	func tableCell(_ header: String, isInput: Bool = true, isHeader: Bool = true) -> some View {
 		let opacity = isHeader ? 0.3 : 0.1

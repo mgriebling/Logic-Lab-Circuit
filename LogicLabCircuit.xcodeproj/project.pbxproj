@@ -102,7 +102,6 @@
 			mainGroup = BD7E618C2E1A386D001627AE;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				BD34B4A22E6C25D2001F7D3F /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				BDF16EF72E6C40DF008B4EA5 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -375,14 +374,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		BD34B4A22E6C25D2001F7D3F /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				kind = exactVersion;
-				version = 0.59.1;
-			};
-		};
 		BDF16EF72E6C40DF008B4EA5 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";

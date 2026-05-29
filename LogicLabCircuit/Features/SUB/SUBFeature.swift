@@ -50,9 +50,9 @@ struct SUBFeature {
             case .computeOutput:
                 (state.outputD, state.outputBo) =
 					ALUModel.compute(
-						a: state.inputA,
-						b: state.inputB,
-						c: state.inputBi,
+						aIn: state.inputA,
+						bIn: state.inputB,
+						cIn: state.inputBi,
 						operation: .sub)
                 return .none
             }

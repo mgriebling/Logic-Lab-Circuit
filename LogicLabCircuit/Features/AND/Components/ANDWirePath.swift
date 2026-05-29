@@ -10,31 +10,17 @@ import ComposableArchitecture
 
 struct ANDWirePath: View {
     let store: StoreOf<ANDFeature>
-    let activeColor = Color.green
-    let inactiveColor = Color.gray
 
 	var body: some View {
 		ZStack {
-			Path { path in
-				// Input A to AND gate
-				path.move(to: CGPoint(x: 100, y: 55))
-				path.addLine(to: CGPoint(x: 150, y: 55))
-			}
-			.stroke(store.inputA ? activeColor : inactiveColor, lineWidth: 3)
-			
-			Path { path in
-				// Input B to AND gate
-				path.move(to: CGPoint(x: 100, y: 95))
-				path.addLine(to: CGPoint(x: 150, y: 95))
-			}
-			.stroke(store.inputB ? activeColor : inactiveColor, lineWidth: 3)
-			
-			Path { path in
-				// AND gate output to O
-				path.move(to: CGPoint(x: 200, y: 75))
-				path.addLine(to: CGPoint(x: 260, y: 75))
-			}
-			.stroke(store.output ? activeColor : inactiveColor, lineWidth: 3)
+			// Input A to gate
+			Line.hline(from: CGPoint(x: 100, y: 55), length: 50, active: store.inputA)
+
+			// Input B to gate
+			Line.hline(from: CGPoint(x: 100, y: 95), length: 50, active: store.inputB)
+
+			// gate output to O
+			Line.hline(from: CGPoint(x: 200, y: 75), length: 60, active: store.output)
 		}
 	}
 }

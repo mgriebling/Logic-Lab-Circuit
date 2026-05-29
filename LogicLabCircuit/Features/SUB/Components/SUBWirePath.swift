@@ -10,146 +10,76 @@ import ComposableArchitecture
 
 struct SUBWirePath: View {
     let store: StoreOf<SUBFeature>
-    let activeColor = Color.green
-    let inactiveColor = Color.gray
-    let radius: CGFloat = 3.0
 
 	var body: some View {
 		let xorAB = store.inputA != store.inputB
 		let xnorAB = !(store.inputA != store.inputB)
 		let notA = !store.inputA
+		let andAB = store.inputB && notA
+		
 		ZStack {
 			// Bin to XOR2
-			Path { path in
-				path.move(to: CGPoint(x: 18, y: 57.5))
-				path.addLine(to: CGPoint(x: 275, y: 57.5))
-			}
-			.stroke(store.inputBi ? activeColor : inactiveColor, lineWidth: 3)
+			Line.hline(from: CGPoint(x: 18, y: 57.5), length: 257, active: store.inputBi)
 			
 			// Dot at Bin to AND2
-			Path { path in
-				path.addEllipse(in: CGRect(x: 125 - radius, y: 57.5 - radius, width: radius * 2, height: radius * 2))
-			}
-			.stroke(store.inputBi ? activeColor : inactiveColor, lineWidth: 3)
+			Line.dot(at: CGPoint(x: 125, y: 57.5), active: store.inputBi)
 			
 			// Bin to XOR2
-			Path { path in
-				path.move(to: CGPoint(x: 125, y: 57.5))
-				path.addLine(to: CGPoint(x: 125, y: 180))
-				path.move(to: CGPoint(x: 125, y: 180))
-				path.addLine(to: CGPoint(x: 215, y: 180))
-			}
-			.stroke(store.inputBi ? activeColor : inactiveColor, lineWidth: 3)
+			Line.vline(from: CGPoint(x: 125, y: 57.5), length: 122.5, active: store.inputBi)
+			Line.hline(from: CGPoint(x: 125, y: 180), length: 90, active: store.inputBi)
 			
 			// XOR2 to D
-			Path { path in
-				path.move(to: CGPoint(x: 295, y: 70))
-				path.addLine(to: CGPoint(x: 355, y: 70))
-			}
-			.stroke(store.outputD ? activeColor : inactiveColor, lineWidth: 3)
+			Line.hline(from: CGPoint(x: 295, y: 70), length: 60, active: store.outputD)
 			
 			// A to XOR1
-			Path { path in
-				path.move(to: CGPoint(x: 18, y: 97.5))
-				path.addLine(to: CGPoint(x: 63, y: 97.5))
-			}
-			.stroke(store.inputA ? activeColor : inactiveColor, lineWidth: 3)
+			Line.hline(from: CGPoint(x: 18, y: 97.5), length: 45, active: store.inputA)
 			
 			// B to XOR1
-			Path { path in
-				path.move(to: CGPoint(x: 18, y: 127.5))
-				path.addLine(to: CGPoint(x: 65, y: 127.5))
-			}
-			.stroke(store.inputB ? activeColor : inactiveColor, lineWidth: 3)
+			Line.hline(from: CGPoint(x: 18, y: 127.5), length: 47, active: store.inputB)
 			
 			// A to NOT1
-			Path { path in
-				path.move(to: CGPoint(x: 30, y: 97.5))
-				path.addLine(to: CGPoint(x: 30, y: 222.5))
-				path.addLine(to: CGPoint(x: 65, y: 222.5))
-			}
-			.stroke(store.inputA ? activeColor : inactiveColor, lineWidth: 3)
+			Line.vline(from: CGPoint(x: 30, y: 97.5), length: 125, active: store.inputA)
+			Line.hline(from: CGPoint(x: 30, y: 222.5), length: 35, active: store.inputA)
 			
 			// Dot at A to NOT1
-			Path { path in
-				path.addEllipse(in: CGRect(x: 30 - radius, y: 97.5 - radius, width: radius * 2, height: radius * 2))
-			}
-			.stroke(store.inputA ? activeColor : inactiveColor, lineWidth: 3)
+			Line.dot(at: CGPoint(x: 30, y: 97.5), active: store.inputA)
 			
 			// NOT1 to AND1
-			Path { path in
-				path.move(to: CGPoint(x: 92.5, y: 222.5))
-				path.addLine(to: CGPoint(x: 110, y: 222.5))
-			}
-			.stroke(notA ? activeColor : inactiveColor, lineWidth: 3)
+			Line.hline(from: CGPoint(x: 92.5, y: 222.5), length: 17.5, active: notA)
 			
 			// B to AND1
-			Path { path in
-				path.move(to: CGPoint(x: 50, y: 127.5))
-				path.addLine(to: CGPoint(x: 50, y: 245))
-				path.addLine(to: CGPoint(x: 110, y: 245))
-			}
-			.stroke(store.inputB ? activeColor : inactiveColor, lineWidth: 3)
+			Line.vline(from: CGPoint(x: 50, y: 127.5), length: 117.5, active: store.inputB)
+			Line.hline(from: CGPoint(x: 50, y: 245), length: 60, active: store.inputB)
 			
 			// Dot at B to AND1
-			Path { path in
-				path.addEllipse(in: CGRect(x: 50 - radius, y: 127.5 - radius, width: radius * 2, height: radius * 2))
-			}
-			.stroke(store.inputB ? activeColor : inactiveColor, lineWidth: 3)
+			Line.dot(at: CGPoint(x: 102.5, y: 115), active: store.inputB)
 			
 			// XOR1 to NOT2
-			Path { path in
-				path.move(to: CGPoint(x: 102.5, y: 115))
-				path.addLine(to: CGPoint(x: 140, y: 115))
-				path.addLine(to: CGPoint(x: 140, y: 160))
-				path.addLine(to: CGPoint(x: 165, y: 160))
-			}
-			.stroke(xorAB ? activeColor : inactiveColor, lineWidth: 3)
+			Line.hline(from: CGPoint(x: 102.5, y: 115), length: 37.5, active: xorAB)
+			Line.vline(from: CGPoint(x: 140, y: 115), length: 45, active: xorAB)
+			Line.hline(from: CGPoint(x: 140, y: 160), length: 25, active: xorAB)
 			
 			// Dot at XOR1 to XOR2
-			Path { path in
-				path.addEllipse(in: CGRect(x: 140 - radius, y: 115 - radius, width: radius * 2, height: radius * 2))
-			}
-			.stroke(xorAB ? activeColor : inactiveColor, lineWidth: 3)
+			Line.dot(at: CGPoint(x: 140, y: 115), active: xorAB)
 			
 			// XOR1 to XOR2
-			Path { path in
-				path.move(to: CGPoint(x: 140, y: 115))
-				path.addLine(to: CGPoint(x: 245, y: 115))
-				path.addLine(to: CGPoint(x: 245, y: 85))
-				path.addLine(to: CGPoint(x: 275, y: 85))
-			}
-			.stroke(xorAB ? activeColor : inactiveColor, lineWidth: 3)
+			Line.hline(from: CGPoint(x: 140, y: 115), length: 105, active: xorAB)
+			Line.vline(from: CGPoint(x: 245, y: 115), length: -30, active: xorAB)
+			Line.hline(from: CGPoint(x: 245, y: 85), length: 30, active: xorAB)
 			
 			// NOT2 to AND2
-			Path { path in
-				path.move(to: CGPoint(x: 175, y: 160))
-				path.addLine(to: CGPoint(x: 215, y: 160))
-			}
-			.stroke(xnorAB ? activeColor : inactiveColor, lineWidth: 3)
+			Line.hline(from: CGPoint(x: 175, y: 160), length: 40, active: xnorAB)
 			
 			// AND2 to OR
-			Path { path in
-				path.move(to: CGPoint(x: 250, y: 167.5))
-				path.addLine(to: CGPoint(x: 280, y: 167.5))
-			}
-			.stroke(xnorAB && store.inputBi ? activeColor : inactiveColor, lineWidth: 3)
+			Line.hline(from: CGPoint(x: 250, y: 167.5), length: 30, active: xnorAB)
 			
 			// AND1 to OR
-			Path { path in
-				path.move(to: CGPoint(x: 150, y: 230))
-				path.addLine(to: CGPoint(x: 260, y: 230))
-				path.addLine(to: CGPoint(x: 260, y: 190))
-				path.addLine(to: CGPoint(x: 280, y: 190))
-			}
-			.stroke((store.inputB && notA) ? activeColor : inactiveColor, lineWidth: 3)
+			Line.hline(from: CGPoint(x: 150, y: 230), length: 110, active: andAB)
+			Line.vline(from: CGPoint(x: 260, y: 230), length: -40, active: andAB)
+			Line.hline(from: CGPoint(x: 260, y: 190), length: 20, active: andAB)
 			
 			// OR to Bo
-			Path { path in
-				path.move(to: CGPoint(x: 317.5, y: 177.5))
-				path.addLine(to: CGPoint(x: 355, y: 177.5))
-			}
-			.stroke(store.outputBo ? activeColor : inactiveColor, lineWidth: 3)
+			Line.hline(from: CGPoint(x: 317.5, y: 177.5), length: 37.5, active: store.outputBo)
 		}
 	}
 }
