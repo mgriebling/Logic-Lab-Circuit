@@ -14,10 +14,10 @@ struct NOTWirePath: View {
 	var body: some View {
 		ZStack {
 			// Input A to gate
-			Line.hline(from: CGPoint(x: 95, y: 75), length: 65, active: store.inputA)
+			Line.hline(from: CGPoint(95, 75), length: 65, active: store.inputA)
 
 			// gate output to O
-			Line.hline(from: CGPoint(x: 200, y: 75), length: 65, active: store.output)
+			Line.hline(from: CGPoint(200, 75), length: 65, active: store.output)
 		}
 	}
 }

@@ -15,8 +15,8 @@ struct NORGateLayout: View {
 		HStack(alignment: .top, spacing: 40) {
 			// Inputs
 			VStack(spacing: 20) {
-				logicNode(imageName: store.inputA ? "IN_On" : "IN_Off", label: "A")
-				logicNode(imageName: store.inputB ? "IN_On" : "IN_Off", label: "B")
+				LogicNode(label: "A", active: store.inputA)
+				LogicNode(label: "B", active: store.inputB)
 			}
 			
 			// Gate
@@ -26,20 +26,9 @@ struct NORGateLayout: View {
 			
 			// Output
 			VStack {
-				logicNode(imageName: store.output ? "OUT_On" : "OUT_Off", label: "O")
+				LogicNode(label: "O", active: store.output, output: true)
 			}
 			.padding(.top, 20)
 		}
 	}
-
-    private func logicNode(imageName: String, label: String, font: Font = .footnote) -> some View {
-        ZStack {
-            Image(imageName)
-                .resizable()
-                .frame(width: 20, height: 20)
-            Text(label)
-                .font(font)
-                .foregroundStyle(Color(.black))
-        }
-    }
 }

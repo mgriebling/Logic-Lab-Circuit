@@ -19,3 +19,9 @@ extension String {
         return pad + self
     }
 }
+
+extension CGPoint {
+	init(_ x: CGFloat, _ y: CGFloat) {
+		self.init(x: x, y: y)
+	}
+}

@@ -14,15 +14,13 @@ struct NANDWirePath: View {
 	var body: some View {
 		ZStack {
 			// Input A to gate
-			Line.hline(from: CGPoint(x: 100, y: 55), length: 50, active: store.inputA)
+			Line.hline(from: CGPoint(100, 55), length: 50, active: store.inputA)
 
 			// Input B to gate
-			Line.hline(from: CGPoint(x: 100, y: 95), length: 50, active: store.inputB)
+			Line.hline(from: CGPoint(100, 95), length: 50, active: store.inputB)
 
 			// gate output to O
-			Line.hline(from: CGPoint(x: 200, y: 75), length: 80, active: store.output)
+			Line.hline(from: CGPoint(200, 75), length: 80, active: store.output)
 		}
 	}
 }
-
-

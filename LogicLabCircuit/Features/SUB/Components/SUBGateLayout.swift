@@ -19,10 +19,10 @@ struct SUBGateLayout: View {
 		HStack(alignment: .top, spacing: 20) {
 			// Inputs
 			VStack(spacing: 10) {
-				logicNode(imageName: store.inputBi ? "IN_On" : "IN_Off", label: "Bin", font: .custom("SF Pro", size: 9))
+				LogicNode(label: "Bi", active: store.inputBi, font: .caption)
 					.padding(.bottom, 10)
-				logicNode(imageName: store.inputA ? "IN_On" : "IN_Off", label: "A")
-				logicNode(imageName: store.inputB ? "IN_On" : "IN_Off", label: "B")
+				LogicNode(label: "A", active: store.inputA)
+				LogicNode(label: "B", active: store.inputB)
 			}
 			
 			// Gates
@@ -51,21 +51,10 @@ struct SUBGateLayout: View {
 			
 			// Outputs
 			VStack(spacing: 87.5) {
-				logicNode(imageName: store.outputD ? "OUT_On" : "OUT_Off", label: "D")
-				logicNode(imageName: store.outputBo ? "OUT_On" : "OUT_Off", label: "Bo", font: .custom("SF Pro", size: 9))
+				LogicNode(label: "D", active: store.outputD, output: true)
+				LogicNode(label: "Bo", active: store.outputBo, font: .caption, output: true)
 			}
 			.padding(.top, 12.5)
 		}
 	}
-    
-    private func logicNode(imageName: String, label: String, font: Font = .footnote) -> some View {
-        ZStack {
-            Image(imageName)
-                .resizable()
-                .frame(width: 20, height: 20)
-            Text(label)
-                .font(font)
-                .foregroundStyle(Color(.black))
-        }
-    }
 }

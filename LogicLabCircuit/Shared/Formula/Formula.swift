@@ -8,13 +8,13 @@
 import Foundation
 
 struct FullAdderFormula {
-    static let sum = "(A ⊕ B) ⊕ Cin"
-    static let carryOut = "(A ⋅ B) + (Cin ⋅ (A ⊕ B))"
+    static let sum = "(A ⊕ B) ⊕ Ci"
+    static let carryOut = "(A ⋅ B) + (Ci ⋅ (A ⊕ B))"
 }
 
 struct FullSubtractorFormula {
-    static let difference = "(A ⊕ B) ⊕ Bin"
-    static let borrow = "¬A ⋅ B + ¬A ⋅ Bin + B ⋅ Bin"
+    static let difference = "(A ⊕ B) ⊕ Bi"
+    static let borrow = "¬A ⋅ B + ¬A ⋅ Bi + B ⋅ Bi"
 }
 
 struct HalfAdderFormula {

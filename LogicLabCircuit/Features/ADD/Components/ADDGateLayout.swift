@@ -18,9 +18,9 @@ struct ADDGateLayout: View {
 		HStack(alignment: .top, spacing: 40) {
 			// Inputs
 			VStack(spacing: 20) {
-				ADDLogicNode(imageName: store.inputA ? "IN_On" : "IN_Off", label: "A")
-				ADDLogicNode(imageName: store.inputB ? "IN_On" : "IN_Off", label: "B")
-				ADDLogicNode(imageName: store.inputCi ? "IN_On" : "IN_Off", label: "Ci", font: .caption)
+				LogicNode(label: "A", active: store.inputA)
+				LogicNode(label: "B", active: store.inputB)
+				LogicNode(label: "Ci", active: store.inputCi, font: .caption)
 			}
 			
 			// Gates
@@ -29,7 +29,10 @@ struct ADDGateLayout: View {
 					Image(orAB && xorAB ? "XOR_On" : "XOR")
 						.resizable()
 						.frame(width: 75, height: 60)
-					Image(store.outputS ? "XOR_On" : "XOR").resizable().frame(width: 75, height: 60).padding(.top, 35)
+					Image(store.outputS ? "XOR_On" : "XOR")
+						.resizable()
+						.frame(width: 75, height: 60)
+						.padding(.top, 35)
 				}
 				
 				HStack(alignment: .top, spacing: 50) {
@@ -51,8 +54,8 @@ struct ADDGateLayout: View {
 			
 			// Outputs
 			VStack(spacing: 95) {
-				ADDLogicNode(imageName: store.outputS ? "OUT_On" : "OUT_Off", label: "S")
-				ADDLogicNode(imageName: store.outputCo ? "OUT_On" : "OUT_Off", label: "Co", font: .caption)
+				LogicNode(label: "S", active: store.outputS, output: true)
+				LogicNode(label: "Co", active: store.outputCo, font: .caption, output: true)
 			}
 			.padding(.top, 55)
 		}

@@ -15,7 +15,7 @@ struct NOTGateLayout: View {
 		HStack(alignment: .top, spacing: 40) {
 			// Inputs
 			VStack {
-				logicNode(imageName: store.inputA ? "IN_On" : "IN_Off", label: "A")
+				LogicNode(label: "A", active: store.inputA)
 			}
 			.padding(.top, 20)
 			
@@ -26,20 +26,9 @@ struct NOTGateLayout: View {
 			
 			// Output
 			VStack {
-				logicNode(imageName: store.output ? "OUT_On" : "OUT_Off", label: "O")
+				LogicNode(label: "O", active: store.output, output: true)
 			}
 			.padding(.top, 20)
 		}
 	}
-
-    private func logicNode(imageName: String, label: String, font: Font = .footnote) -> some View {
-        ZStack {
-            Image(imageName)
-                .resizable()
-                .frame(width: 20, height: 20)
-            Text(label)
-                .font(font)
-                .foregroundStyle(Color(.black))
-        }
-    }
 }

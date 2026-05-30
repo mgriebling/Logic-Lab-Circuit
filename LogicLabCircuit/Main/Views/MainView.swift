@@ -139,7 +139,7 @@ struct MainView: View {
 		case .xorGate:
             ["XOR Gate: \(XORFormula.exclusiveOr)"]
 		case .xnorGate:
-			["XOR Gate: \(XNORFormula.exclusiveNor)"]
+			["XNOR Gate: \(XNORFormula.exclusiveNor)"]
         }
     }
     
@@ -147,12 +147,12 @@ struct MainView: View {
         switch operation {
         case .add:
 			TruthTables.generateTable(for: .add,
-									  inputs: ["A", "B", "C-IN"],
-									  outputs: ["Sum", "C-OUT"])
+									  inputs: ["A", "B", "Ci"],
+									  outputs: ["Sum", "Co"])
         case .sub:
 			TruthTables.generateTable(for: .sub,
-									  inputs: ["A", "B", "B-IN"],
-									  outputs: ["D", "B-OUT"])
+									  inputs: ["A", "B", "Bi"],
+									  outputs: ["D", "Bo"])
         case .notGate:
 			// all the 1-input operations
 			TruthTables.generateTable(for: operation, inputs: ["A"])
