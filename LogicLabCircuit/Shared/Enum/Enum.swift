@@ -16,4 +16,19 @@ enum ALUOperation: String, CaseIterable {
 	case norGate = "NOR"
     case xorGate = "XOR"
 	case xnorGate = "XNOR"
+	
+	static func getOperations(for kind: OperationKind) -> [Self] {
+		switch kind {
+			case .math: [.add, .sub]
+			case .basic: [.andGate, .orGate, .xorGate]
+			case .inverted: [.notGate, .nandGate, .norGate, .xnorGate]
+		}
+	}
+	
+}
+
+enum OperationKind: String, CaseIterable {
+	case math = "MATH"
+	case basic = "BASIC"
+	case inverted = "INVERTED"
 }

@@ -18,13 +18,22 @@ struct MainView: View {
 			Text("Simulator")
 				.font(.title3)
 			
-			// Picker for selecting operation
-			Picker("Operation", selection: $store.selectedOperation.sending(\.operationChanged).animation(.default)) {
-				ForEach(ALUOperation.allCases, id: \.self) { operation in
-					Text(operation.rawValue + " Logic Circuit").tag(operation)
+			// Picker for kind of operations (e.g., basic, inverted, etc.)
+			Picker("Kind", selection: $store.selectedKind.sending(\.kindChanged).animation(.default)) {
+				ForEach(OperationKind.allCases, id: \.self) { kind in
+					Text(kind.rawValue).tag(kind)
 				}
 			}
-			// .pickerStyle(.wheel)
+			.pickerStyle(.segmented)
+			.padding(.horizontal)
+			
+			// Picker for selecting operation
+			Picker("Operation", selection: $store.selectedOperation.sending(\.operationChanged).animation(.default)) {
+				ForEach(ALUOperation.getOperations(for: store.selectedKind), id: \.self) { operation in
+					Text(operation.rawValue).tag(operation)
+				}
+			}
+			.pickerStyle(.segmented)
 			.padding(.horizontal)
 			
 			Divider()

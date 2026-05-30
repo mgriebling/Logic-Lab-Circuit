@@ -16,6 +16,7 @@ struct MainFeature {
         var inputB: Bool = false
         var inputCi: Bool = false
         var selectedOperation: ALUOperation = .add
+		var selectedKind: OperationKind = .math
         var result: Bool = false
         var isTapped: Bool = false
         
@@ -36,6 +37,7 @@ struct MainFeature {
         case inputBChanged(Bool)
         case inputCiChanged(Bool)
         case operationChanged(ALUOperation)
+		case kindChanged(OperationKind)
         case isTappedChanged(Bool)
         case computeResult
         
@@ -135,6 +137,13 @@ struct MainFeature {
                 return .run { send in
                     await send(.computeResult)
                 }
+					
+			case let .kindChanged(kind):
+				state.selectedKind = kind
+				state.selectedOperation = ALUOperation.getOperations(for: kind).first ?? .add
+				return .run { send in
+					await send(.computeResult)
+				}
                 
             case let .isTappedChanged(value):
                 state.isTapped = value
