@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47ABAA952FCB349B003BA2C6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 47ABAA942FCB349B003BA2C6 /* README.md */; };
 		BDF16EF92E6C40DF008B4EA5 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = BDF16EF82E6C40DF008B4EA5 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47ABAA942FCB349B003BA2C6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BD7E61952E1A386D001627AE /* LogicLabCircuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogicLabCircuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -37,6 +39,7 @@
 		BD7E618C2E1A386D001627AE = {
 			isa = PBXGroup;
 			children = (
+				47ABAA942FCB349B003BA2C6 /* README.md */,
 				BD7E61972E1A386D001627AE /* LogicLabCircuit */,
 				BD7E61962E1A386D001627AE /* Products */,
 			);
@@ -119,6 +122,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47ABAA952FCB349B003BA2C6 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
