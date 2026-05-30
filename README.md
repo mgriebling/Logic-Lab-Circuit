@@ -24,7 +24,7 @@
 **Logic Lab Circuit** is an educational logic simulator designed to visualize the real-time operation of binary logic gates.  
 It helps students understand how gates combine to form digital systems, such as:
 
-- AND, OR, NOT, XOR logic gates  
+- AND, NAND, OR, NOR, NOT, XOR, XNOR logic gates  
 - Full Adder Circuits  
 - Full Subtractor Circuits  
 - **Coming Soon:** Step-by-step visual circuit walkthroughs, Binary Multiplication and Division
